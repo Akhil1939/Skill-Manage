@@ -1,0 +1,14 @@
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\bin\Debug\net6.0\Skill.Entity.deps.json
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\bin\Debug\net6.0\Skill.Entity.dll
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\bin\Debug\net6.0\ref\Skill.Entity.dll
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\bin\Debug\net6.0\Skill.Entity.pdb
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.AssemblyInfoInputs.cache
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.AssemblyInfo.cs
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.csproj.CoreCompileInputs.cache
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.dll
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\ref\Skill.Entity.dll
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.pdb
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\bin\Debug\net6.0\Skill.Entity.runtimeconfig.json
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.csproj.AssemblyReference.cache
+C:\Users\pct78\Desktop\Skill-Manage\Skill Management\Skill.Entity\obj\Debug\net6.0\Skill.Entity.genruntimeconfig.cache
