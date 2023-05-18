@@ -1,12 +1,9 @@
-﻿using SkillEntities.DataModels;
+﻿using Serilog;
+using SkillEntities.DataModels;
 using SkillEntities.DTOs;
+using SkillEntities.DTOs.Skill;
 using SkillRepositories.Interfaces;
 using SkillServices.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkillServices
 {
@@ -19,7 +16,6 @@ namespace SkillServices
             _skillGenRepo = skillGenRepo;
         }
 
-       
         public DataList<Skill> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword)
         {
             IQueryable<Skill> SkillList = _skillGenRepo.GetAll();
@@ -66,5 +62,70 @@ namespace SkillServices
             return Result;
 
         }
+        public async Task<bool> AddSkill(AddSkill NewSkill)
+        {
+            Skill skill = new Skill
+            {
+                SkillName = NewSkill.SkillName,
+                Status = NewSkill.Status,
+                CreatedAt = DateTime.Now,
+            };
+
+            try
+            {
+                await _skillGenRepo.AddAsync(skill);
+                return true;
+            }catch (Exception ex)
+            {
+                Log.Error(ex, "An error occurred while adding a skill.");
+                return false;
+            }
+
+            
+        }
+
+        public async Task<bool> UpdateSkill(UpdateSkill UpdateSkill)
+        {
+            Skill skill = new Skill
+            {
+                SkillId = UpdateSkill.SkillId,
+                SkillName = UpdateSkill.SkillName,
+                Status = UpdateSkill.Status,
+                UpdatedAt = DateTime.Now,
+            };
+
+            try
+            {
+                await _skillGenRepo.DeleteAsync(skill);
+                return true;
+            }catch(Exception ex)
+            {
+                Log.Error(ex, "An error occurred while Updating a skill.");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteSkill(long SkillId)
+        {
+            try
+            {
+              Skill skill =  await _skillGenRepo.GetByIdAsync(SkillId);
+                if(skill != null)
+                {
+                    await _skillGenRepo.DeleteAsync(skill);
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Skill not Found");
+                }
+            }catch(Exception ex)
+            {
+                Log.Error(ex, "An error occurred while Deleting a skill.");
+                return false;
+            }
+        }
+
+
     }
 }

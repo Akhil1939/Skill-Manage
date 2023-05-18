@@ -4,6 +4,10 @@ using SkillRepositories.Interfaces;
 using SkillRepositories.Repositories;
 using SkillServices;
 using SkillServices.IServices;
+using Serilog;
+using Serilog.Events;
+using Serilog.Exceptions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +25,12 @@ builder.Services.AddScoped<ISkillService, SkillService>();
 
 var app = builder.Build();
 
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .Enrich.WithExceptionDetails()
+    .MinimumLevel.Debug()
+    .WriteTo.File("log.txt", LogEventLevel.Error)
+    .CreateLogger();
 
 
 // Configure the HTTP request pipeline.
