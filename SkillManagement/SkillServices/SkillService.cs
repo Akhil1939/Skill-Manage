@@ -16,7 +16,7 @@ namespace SkillServices
             _skillGenRepo = skillGenRepo;
         }
 
-        public DataList<Skill> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword)
+        public DataList<SkillListing> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword)
         {
             IQueryable<Skill> SkillList = _skillGenRepo.GetAll();
 
@@ -56,9 +56,17 @@ namespace SkillServices
                     break;
             }
 
-            DataList<Skill> Result = new();
+            DataList<SkillListing> Result = new();
             Result.TotalRecords = SkillList.Count();
-            Result.Records = SkillList.Skip((PageNo - 1)* PageSize).Take(PageSize).ToList();
+            Result.Records = SkillList.Skip((PageNo - 1)* PageSize).Take(PageSize)
+                .Select(skill=> new SkillListing()
+                {
+                    SkillId = skill.SkillId,
+                    SkillName = skill.SkillName,
+                    Status = skill.Status
+
+                })
+                .ToList();
             return Result;
 
         }

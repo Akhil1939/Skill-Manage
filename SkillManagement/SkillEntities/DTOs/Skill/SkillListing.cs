@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SkillEntities.DTOs
 {
-    internal class SkillListing
+    public class SkillListing
     {
+        public long SkillId { get; set; }
+        public string SkillName { get; set;}
+        public int Status { get; set; }
     }
 }

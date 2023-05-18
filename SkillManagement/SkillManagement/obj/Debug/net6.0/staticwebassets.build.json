@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wKkD75gCfixYBsnFCdXYpdJ/hWcjwa6pbkTNy1ENlHI=",
+  "Hash": "UnSanpYaNTv2Z0yNNIsKEsSNOfq0nHHbdEoPUNgHxGs=",
   "Source": "SkillManagement",
   "BasePath": "_content/SkillManagement",
   "Mode": "Default",
@@ -85,6 +85,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\pct78\\Desktop\\Skill-Manage\\SkillManagement\\SkillManagement\\wwwroot\\js\\Pagination.js",
+      "SourceId": "SkillManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pct78\\Desktop\\Skill-Manage\\SkillManagement\\SkillManagement\\wwwroot\\",
+      "BasePath": "_content/SkillManagement",
+      "RelativePath": "js/Pagination.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Pagination.js"
+    },
+    {
       "Identity": "C:\\Users\\pct78\\Desktop\\Skill-Manage\\SkillManagement\\SkillManagement\\wwwroot\\js\\site.js",
       "SourceId": "SkillManagement",
       "SourceType": "Discovered",
@@ -100,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\pct78\\Desktop\\Skill-Manage\\SkillManagement\\SkillManagement\\wwwroot\\js\\Skill\\SkillPage.js",
+      "SourceId": "SkillManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pct78\\Desktop\\Skill-Manage\\SkillManagement\\SkillManagement\\wwwroot\\",
+      "BasePath": "_content/SkillManagement",
+      "RelativePath": "js/Skill/SkillPage.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Skill\\SkillPage.js"
     },
     {
       "Identity": "C:\\Users\\pct78\\Desktop\\Skill-Manage\\SkillManagement\\SkillManagement\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

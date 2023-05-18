@@ -1,6 +1,40 @@
-﻿@if (TempData.ContainsKey("SuccessMessage"))
+﻿@using SkillEntities.DTOs
+@model DataList<SkillListing>
+
+@if (TempData.ContainsKey("SuccessMessage"))
 {
     <div class="alert alert-success">@TempData["SuccessMessage"]</div>
 }
 
-<h5>skill</h5>
+@{
+    @if (@Model?.Records != null)
+    {
+        <div id="Skill_List">
+        <Partial name="Skill/_SkillListing" model=@Model.Records />
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end align-items-center">
+                <li class="" id="previous" >
+                    <button class="btn btn-secondary previous-btn" onclick="previousPage()">Previous</button>
+                </li>
+                @for (var i = 1; i<=Math.Ceiling((decimal)@Model.TotalRecords / 5); i++)
+                {
+                    
+                <li class="page-item"><button class="page-link page-indexes" id="page-@i" onclick="ChangePage(this)" >@i</button></li>
+                }
+               
+                <li class="" id="next">
+                    <button class="btn btn-secondary next-btn" onclick="nextPage()" >Next</button>
+                </li>
+            </ul>
+        </nav>
+    }
+    else
+    {
+        <h4>No recordes found</h4>
+    }
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Pagination.js"></script>
+<script src="~/js/Skill/SkillPage.js"></script>
