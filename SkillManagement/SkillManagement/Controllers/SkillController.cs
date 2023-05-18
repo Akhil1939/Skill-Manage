@@ -21,9 +21,9 @@ namespace Skill_Management.Controllers
         }
 
         [HttpPost]
-        public IActionResult SkillFilter([FromBody] SkillFilter Params)
+        public IActionResult SkillFilter([FromBody]SkillFilter param)
         {
-            DataList<SkillListing> SkillList = _skillService.GetSkillList(Params.PageNo, Params.PageSize, Params.Status, Params.Sort, Params.Keyword);
+            DataList<SkillListing> SkillList = _skillService.GetSkillList(param.PageNo, param.PageSize, param.Status, param.Sort, param.Keyword);
             return PartialView("Skill/_SkillListing", SkillList.Records);
         }
 
@@ -32,46 +32,76 @@ namespace Skill_Management.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddSkill(AddSkill NewSkill)
+        public async Task<IActionResult> AddSkill(AddSkill newSkill)
         {
             if (ModelState.IsValid)
             {
 
-                bool IsSkillAdded = await _skillService.AddSkill(NewSkill);
+                bool IsSkillAdded = await _skillService.AddSkill(newSkill);
                 if (IsSkillAdded)
                 {
+                    TempData["SuccessMessage"] = "Skill Added Successfull";
                     return  RedirectToAction("Home");
                 }
                 else
                 {
-                    return View(NewSkill);
+                    TempData["ErrorMessage"] = "Error in Adding Skill";
+                    return View(newSkill);
                 }
             }
             else
             {
-                return View(NewSkill);
+                TempData["ErrorMessage"] = "Fill Valid Data";
+                return View(newSkill);
             }
         }
+        public async Task<IActionResult> UpdateSkill(long id)
+        {
+            UpdateSkill skill = await _skillService.GetSkillById(id);
+            if(skill!= null)
+            {
+                return View(skill);
+            }
+            return RedirectToAction("Home");
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateSkill(UpdateSkill Skill)
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSkill(UpdateSkill skill)
         {
             if (ModelState.IsValid)
             {
-                bool IsSkillUpdated = await _skillService.UpdateSkill(Skill);
+                bool IsSkillUpdated = await _skillService.UpdateSkill(skill);
                 if (IsSkillUpdated)
                 {
-                    return View("Home");
+                    TempData["SuccessMessage"] = "Skill Updated Successfull";
+                    return RedirectToAction("Home");
                 }
                 else
                 {
-                    return View(Skill);
+                    TempData["ErrorMessage"] = "Error in Updating Skill";
+                    return View(skill);
                 }
             }
             else
             {
-                return View(Skill);
+                TempData["ErrorMessage"] = "Fill Valid Data";
+                return View(skill);
             }
+        }
+
+        public async Task<IActionResult> DeleteSkill(long id)
+        {
+            bool isSkillDeleted = await _skillService.DeleteSkill(id);
+            if (isSkillDeleted)
+            {
+                TempData["SuccessMessage"] = "Skill Deleted Successfull";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Error in Deleting Skill";
+            }
+            return RedirectToAction("Home");
         }
     }
 }

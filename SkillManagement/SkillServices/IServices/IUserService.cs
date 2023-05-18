@@ -11,7 +11,7 @@ namespace SkillServices.IServices
     public interface IUserService
     {
         Task<User> GetUserById(int id);
-        Task<GenModel<bool>> UserLogin(UserLogin Credentials);
+        Task<GenModel<bool>> UserLogin(UserLogin credentials);
 
     }
 }

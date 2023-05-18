@@ -28,9 +28,9 @@ namespace SkillServices
             return await _userGenRepo.GetByIdAsync(id);
         }
 
-        public async Task<GenModel<User>> GetUserByEmail(string Email)
+        public async Task<GenModel<User>> GetUserByEmail(string email)
         {
-            User user = await _userRepo.GetUserByEmail(Email);
+            User user = await _userRepo.GetUserByEmail(email);
 
             GenModel<User> Response = new();
 
@@ -49,9 +49,9 @@ namespace SkillServices
 
         }
 
-        public async Task<GenModel<bool>> UserLogin(UserLogin Credentials)
+        public async Task<GenModel<bool>> UserLogin(UserLogin credentials)
         {
-            GenModel<User> TempUser = await GetUserByEmail(Credentials.UserName);
+            GenModel<User> TempUser = await GetUserByEmail(credentials.UserName);
             User user = TempUser.Data;
             GenModel<bool> Response = new();
             Response.StatusCode = 200;
@@ -63,7 +63,7 @@ namespace SkillServices
                 return Response;
             }
 
-            if(Crypto.VerifyHashedPassword(user.Password, Credentials.Password))
+            if(Crypto.VerifyHashedPassword(user.Password, credentials.Password))
             {
                
                 Response.Message = "Login Successfull";

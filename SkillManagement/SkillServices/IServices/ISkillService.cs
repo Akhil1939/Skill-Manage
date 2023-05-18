@@ -7,9 +7,10 @@ namespace SkillServices.IServices
     public interface ISkillService
     {
         DataList<SkillListing> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword);
-        Task<bool> AddSkill(AddSkill NewSkill);
-        Task<bool> UpdateSkill(UpdateSkill UpdateSkill);
-        Task<bool> DeleteSkill(long SkillId);
+        Task<UpdateSkill> GetSkillById(long skillId);
+        Task<bool> AddSkill(AddSkill newSkill);
+        Task<bool> UpdateSkill(UpdateSkill updateSkill);
+        Task<bool> DeleteSkill(long skillId);
 
     }
 }

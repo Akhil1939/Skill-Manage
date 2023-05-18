@@ -16,9 +16,23 @@ namespace SkillRepositories.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<User> GetUserByEmail(string Email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == Email && user.DeletedAt == null && user.Status == true);
+            try
+            {
+            User user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.DeletedAt == null && user.Status == true);
+                if(user == null)
+                {
+                    return new User();
+                }
+                else
+                {
+                    return user;
+                }
+            }catch(Exception ex)
+            {
+                return new User();
+            }
         }
     }
 }

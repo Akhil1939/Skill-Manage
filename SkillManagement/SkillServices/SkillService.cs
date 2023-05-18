@@ -47,10 +47,10 @@ namespace SkillServices
                     SkillList = SkillList.OrderByDescending(skill => skill.SkillName);
                     break;
                 case "Old_to_New":
-                    SkillList = SkillList.OrderByDescending(skill => skill.CreatedAt);
+                    SkillList = SkillList.OrderBy(skill => skill.CreatedAt);
                     break;
                 case "New_to_Old":
-                    SkillList = SkillList.OrderBy(skill => skill.CreatedAt);
+                    SkillList = SkillList.OrderByDescending(skill => skill.CreatedAt);
                     break;
                 default:
                     break;
@@ -70,12 +70,12 @@ namespace SkillServices
             return Result;
 
         }
-        public async Task<bool> AddSkill(AddSkill NewSkill)
+        public async Task<bool> AddSkill(AddSkill newSkill)
         {
             Skill skill = new Skill
             {
-                SkillName = NewSkill.SkillName,
-                Status = NewSkill.Status,
+                SkillName = newSkill.SkillName,
+                Status = newSkill.Status,
                 CreatedAt = DateTime.Now,
             };
 
@@ -91,20 +91,32 @@ namespace SkillServices
 
             
         }
-
-        public async Task<bool> UpdateSkill(UpdateSkill UpdateSkill)
+        public async Task<UpdateSkill> GetSkillById(long skillId)
         {
-            Skill skill = new Skill
+            Skill skill = await _skillGenRepo.GetByIdAsync(skillId);
+
+            if (skill != null)
             {
-                SkillId = UpdateSkill.SkillId,
-                SkillName = UpdateSkill.SkillName,
-                Status = UpdateSkill.Status,
-                UpdatedAt = DateTime.Now,
-            };
+                return new UpdateSkill()
+                {
+                    SkillId = skill.SkillId,
+                    SkillName = skill.SkillName,
+                    Status = skill.Status
+                };
+            }
+            return new UpdateSkill();
+        }
+
+        public async Task<bool> UpdateSkill(UpdateSkill updateSkill)
+        {
+            Skill oldSkill = await _skillGenRepo.GetByIdAsync(updateSkill.SkillId);
+            oldSkill.SkillName = updateSkill.SkillName;
+            oldSkill.Status = updateSkill.Status;
+            oldSkill.UpdatedAt = DateTime.Now;
 
             try
             {
-                await _skillGenRepo.DeleteAsync(skill);
+                await _skillGenRepo.UpdateAsync(oldSkill);
                 return true;
             }catch(Exception ex)
             {
@@ -113,11 +125,11 @@ namespace SkillServices
             }
         }
 
-        public async Task<bool> DeleteSkill(long SkillId)
+        public async Task<bool> DeleteSkill(long skillId)
         {
             try
             {
-              Skill skill =  await _skillGenRepo.GetByIdAsync(SkillId);
+              Skill skill =  await _skillGenRepo.GetByIdAsync(skillId);
                 if(skill != null)
                 {
                     await _skillGenRepo.DeleteAsync(skill);

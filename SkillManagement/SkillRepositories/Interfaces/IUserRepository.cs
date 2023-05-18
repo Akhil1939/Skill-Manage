@@ -9,6 +9,6 @@ namespace SkillRepositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> GetUserByEmail(string Email);
+        Task<User> GetUserByEmail(string email);
     }
 }

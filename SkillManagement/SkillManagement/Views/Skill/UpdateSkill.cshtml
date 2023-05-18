@@ -1,11 +1,9 @@
 ﻿@using SkillEntities.DTOs.Skill
-@model AddSkill
+@model UpdateSkill
 
 @{
-    ViewData["Title"] = "AddSkill";
+    ViewData["Title"] = "UpdateSkill";
 }
-
-
 @if (TempData.ContainsKey("SuccessMessage"))
 {
     <div class="alert alert-success">@TempData["SuccessMessage"]</div>
@@ -14,13 +12,19 @@
 {
     <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
-<h1>AddSkill</h1>
+<h1>UpdateSkillSkill</h1>
+
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddSkill">
+        <form asp-action="UpdateSkill">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SkillId" class="control-label"></label>
+                <input asp-for="SkillId" class="form-control" hidden />
+                <span asp-validation-for="SkillId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="SkillName" class="control-label"></label>
                 <input asp-for="SkillName" class="form-control" />
@@ -37,8 +41,8 @@
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
     </div>
