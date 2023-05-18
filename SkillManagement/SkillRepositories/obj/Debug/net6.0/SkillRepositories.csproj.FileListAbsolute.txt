@@ -1,0 +1,17 @@
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\SkillRepositories.deps.json
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\SkillRepositories.dll
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\ref\SkillRepositories.dll
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\SkillRepositories.pdb
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\SkillEntities.dll
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\SkillEntities.pdb
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.csproj.AssemblyReference.cache
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.AssemblyInfoInputs.cache
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.AssemblyInfo.cs
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.csproj.CoreCompileInputs.cache
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.csproj.CopyComplete
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.dll
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\ref\SkillRepositories.dll
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.pdb
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\bin\Debug\net6.0\SkillRepositories.runtimeconfig.json
+C:\Users\pct78\Desktop\Skill-Manage\SkillManagement\SkillRepositories\obj\Debug\net6.0\SkillRepositories.genruntimeconfig.cache

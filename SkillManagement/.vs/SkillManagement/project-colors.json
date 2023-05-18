@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "3b62b98d-8fde-411f-81dd-58c44ff655f4": {
+      "ProjectGuid": "3b62b98d-8fde-411f-81dd-58c44ff655f4",
+      "DisplayName": "SkillManagement",
+      "ColorIndex": 0
+    },
+    "6f531f01-915f-41c7-acf0-8d0cb3eae4f5": {
+      "ProjectGuid": "6f531f01-915f-41c7-acf0-8d0cb3eae4f5",
+      "DisplayName": "SkillServices",
+      "ColorIndex": 1
+    },
+    "a08799a8-572b-4655-b9d2-e783acdb1d08": {
+      "ProjectGuid": "a08799a8-572b-4655-b9d2-e783acdb1d08",
+      "DisplayName": "SkillEntities",
+      "ColorIndex": 2
+    },
+    "8c60407a-86d9-4ce2-b606-3f237944ccce": {
+      "ProjectGuid": "8c60407a-86d9-4ce2-b606-3f237944ccce",
+      "DisplayName": "SkillRepositories",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}

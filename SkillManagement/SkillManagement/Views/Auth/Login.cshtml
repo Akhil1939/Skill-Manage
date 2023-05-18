@@ -1,0 +1,22 @@
+﻿@using SkillEntities.DTOs
+
+@model UserLogin
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form asp-action="Login" method='post'>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" asp-for="UserName" aria-describedby="emailHelp">
+        <span class="text-danger" asp-validation-for="UserName"></span>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" asp-for="Password">
+        <span class="text-danger" asp-validation-for="Password"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
