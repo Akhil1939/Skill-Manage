@@ -23,61 +23,57 @@ namespace SkillServices
             _userRepo = userRepo;
         }
 
+        /// <summary>
+        /// Get User By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>User Entity with given Id</returns>
         public async Task<User> GetUserById(int id)
         {
             return await _userGenRepo.GetByIdAsync(id);
         }
 
-        public async Task<GenModel<User>> GetUserByEmail(string email)
+        /// <summary>
+        /// Get User By Email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>User Entity having given Email</returns>
+        public async Task<User> GetUserByEmail(string email)
         {
             User user = await _userRepo.GetUserByEmail(email);
-
-            GenModel<User> Response = new();
-
             if (user == null)
-            {
-                Response.StatusCode = 200;
-                Response.Message = "User Not Found";
-                Response.Data = null;
-                return Response;
+            {   
+                return new User();
             }
-
-            Response.StatusCode = 200;
-            Response.Message = "Success";
-            Response.Data = user;
-            return Response;
+            return user;
 
         }
 
-        public async Task<GenModel<bool>> UserLogin(UserLogin credentials)
+        /// <summary>
+        /// User Login
+        /// </summary>
+        /// <param name="credentials"></param>
+        /// <returns>Boolean response</returns>
+        public async Task<bool> UserLogin(UserLogin credentials)
         {
-            GenModel<User> TempUser = await GetUserByEmail(credentials.UserName);
-            User user = TempUser.Data;
-            GenModel<bool> Response = new();
-            Response.StatusCode = 200;
+            User user = await GetUserByEmail(credentials.UserName);
+
             if (user == null)
             {
-                
-                Response.Message = "Invalid Credentials";
-                Response.Data = false;
-                return Response;
+                return false;
             }
 
-            if(Crypto.VerifyHashedPassword(user.Password, credentials.Password))
+            if (Crypto.VerifyHashedPassword(user.Password, credentials.Password))
             {
-               
-                Response.Message = "Login Successfull";
-                Response.Data = true;
-                return Response;
+                return true;
             }
             else
             {
-                Response.Message = "Invalid Credentials";
-                Response.Data = false;
-                return Response;
+                return false;
             }
 
 
         }
     }
 }
+

@@ -10,8 +10,20 @@ namespace SkillServices.IServices
 {
     public interface IUserService
     {
+
+        /// <summary>
+        /// get user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>single User having given id</returns>
         Task<User> GetUserById(int id);
-        Task<GenModel<bool>> UserLogin(UserLogin credentials);
+
+        /// <summary>
+        /// user login
+        /// </summary>
+        /// <param name="credentials"></param>
+        /// <returns></returns>
+        Task<bool> UserLogin(UserLogin credentials);
 
     }
 }

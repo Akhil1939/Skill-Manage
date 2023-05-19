@@ -9,6 +9,11 @@ namespace SkillRepositories.Interfaces
 {
     public interface IUserRepository
     {
+        /// <summary>
+        /// get user by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Single user entity having given email</returns>
         Task<User> GetUserByEmail(string email);
     }
 }

@@ -13,10 +13,22 @@ namespace Skill_Management.Controllers
         {
             _userService = userService;
         }
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <returns>Login form page</returns>
         public IActionResult Login()
         {
             return View();
         }
+
+        /// <summary>
+        /// Login User Controller
+        /// </summary>
+        /// <param name="Creadentials"> Email and Password</param>
+        /// <returns> Home Page</returns>
+        
         [HttpPost]
         public async Task<IActionResult> Login(UserLogin Creadentials)
         {
@@ -24,8 +36,8 @@ namespace Skill_Management.Controllers
             if (ModelState.IsValid)
             {
                 
-                GenModel<bool> isLoginSuccess = await _userService.UserLogin(Creadentials);
-                if (isLoginSuccess.Data)
+                bool isLoginSuccess = await _userService.UserLogin(Creadentials);
+                if (isLoginSuccess)
                 {
                     TempData["SuccessMessage"] = "Login Successfull";
                     return RedirectToAction("Home", "Skill");

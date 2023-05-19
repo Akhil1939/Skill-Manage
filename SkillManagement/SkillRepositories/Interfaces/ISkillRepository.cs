@@ -10,6 +10,6 @@ namespace SkillRepositories.Interfaces
 {
     public interface ISkillRepository
     {
-        Task<List<Skill>> GetSkillList(int PageNo, int PageSize, string Sort, string Keyword);
+        //Task<List<Skill>> GetSkillList(int PageNo, int PageSize, string Sort, string Keyword);
     }
 }

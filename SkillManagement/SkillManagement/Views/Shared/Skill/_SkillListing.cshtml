@@ -1,16 +1,8 @@
 ﻿@using SkillEntities.DTOs
-@model List<SkillListing>
+@model DataList<SkillListing>
 
 <table class="table">
 
-    <button class="btn btn-success" onclick="location.href='@Url.Action("AddSkill", "Skill")'">
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-        <span>ADD Skill</span>
-    </button>
 
     <thead>
         <tr>
@@ -22,13 +14,25 @@
     </thead>
     <tbody>
         @{
-            @foreach (var skill in @Model)
+            @foreach (var skill in @Model.Records)
             {
 
                 <tr>
                     <th scope="row">@skill.SkillId</th>
                     <td>@skill.SkillName</td>
-                    <td>@skill.Status</td>
+                    <td>
+                        @{
+                            @if (@skill.Status == 1)
+                            {
+                                <p class="text-success">Active</p>
+                            }
+                            else
+
+                            {
+                                <p class="text-danger">Inactive</p>
+                            }
+                        }
+                    </td>
                     <td>
                         <button class="btn btn-warning" onclick="location.href='@Url.Action("UpdateSkill", new {id = @skill.SkillId} )'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -62,3 +66,19 @@
 
     </tbody>
 </table>
+<nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end align-items-center">
+                <li class="" id="previous">
+                    <button class="btn btn-secondary previous-btn" onclick="previousPage()">Previous</button>
+                </li>
+                @for (var i = 1; i <= Math.Ceiling((decimal)@Model.TotalRecords / 5); i++)
+                {
+
+                    <li class="page-item"><button class="page-link page-indexes" id="page-@i" onclick="ChangePage(this)">@i</button></li>
+                }
+
+                <li class="" id="next">
+                    <button class="btn btn-secondary next-btn" onclick="nextPage()">Next</button>
+                </li>
+            </ul>
+        </nav>

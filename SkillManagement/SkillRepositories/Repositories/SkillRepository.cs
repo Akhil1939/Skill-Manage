@@ -11,9 +11,9 @@ namespace SkillRepositories.Repositories
 {
     public class SkillRepository : ISkillRepository
     {
-        public Task<List<Skill>> GetSkillList(int PageNo, int PageSize, string Sort, string Keyword)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<List<Skill>> GetSkillList(int PageNo, int PageSize, string Sort, string Keyword)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

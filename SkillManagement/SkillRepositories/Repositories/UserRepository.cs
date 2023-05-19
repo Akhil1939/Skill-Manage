@@ -16,6 +16,12 @@ namespace SkillRepositories.Repositories
         {
             _dbContext = dbContext;
         }
+
+        /// <summary>
+        /// Get user by email id
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>User entity if found else null user</returns>
         public async Task<User> GetUserByEmail(string email)
         {
             try
