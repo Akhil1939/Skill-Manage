@@ -4,9 +4,10 @@ var PageSize = 5;
 var Status = "All";
 var Sort = "New_to_Old";
 var Keyword = ""
+
 SetPagination();
+
 async function ChangePage(e) {
-    debugger
     PageNo = parseInt(e.id.split('-')[1]);
     await FilterSkill()
     SetPagination();
@@ -57,18 +58,18 @@ async function ApplySorting(e) {
     await FilterSkill();
     SetPagination();
 }
+
 async function ApplyStatus(e) {
     Status = e.value;
     PageNo = 1;
     await FilterSkill();
     SetPagination();
 }
+
 function SetPagination() {
     document.getElementById(`page-${PageNo}`).parentElement.classList.add('active')
     var First_Page = 1;
     var Last_Page = parseInt($(".page-indexes").last().attr("id").split('-')[1])
-
-    
 
     if (PageNo == First_Page) {
             $("#previous")[0].classList.add('d-none');
@@ -86,5 +87,4 @@ function SetPagination() {
                 $("#next")[0].classList.remove('d-none');
             }
         }
-   
 }

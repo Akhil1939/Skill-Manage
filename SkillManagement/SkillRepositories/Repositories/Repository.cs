@@ -14,6 +14,8 @@ namespace SkillRepositories.Repositories
             _dbContext = dbContext;
         }
 
+        #region Get By Id
+
         /// <summary>
         /// get by id
         /// </summary>
@@ -23,7 +25,9 @@ namespace SkillRepositories.Repositories
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
+        #endregion
 
+        #region Get All
         /// <summary>
         /// Get all
         /// </summary>
@@ -32,7 +36,9 @@ namespace SkillRepositories.Repositories
         {
             return  _dbContext.Set<T>().AsQueryable();
         }
+        #endregion
 
+        #region Add
         /// <summary>
         /// Add
         /// </summary>
@@ -43,7 +49,9 @@ namespace SkillRepositories.Repositories
             await _dbContext.Set<T>().AddAsync(entity);
             await _dbContext.SaveChangesAsync();
         }
+        #endregion
 
+        #region Update
         /// <summary>
         /// update
         /// </summary>
@@ -54,7 +62,9 @@ namespace SkillRepositories.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
+        #endregion
 
+        #region Delete
         /// <summary>
         /// Delete
         /// </summary>
@@ -65,7 +75,8 @@ namespace SkillRepositories.Repositories
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+        #endregion
 
-       
+
     }
 }

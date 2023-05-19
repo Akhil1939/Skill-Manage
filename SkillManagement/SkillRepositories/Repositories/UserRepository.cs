@@ -17,6 +17,7 @@ namespace SkillRepositories.Repositories
             _dbContext = dbContext;
         }
 
+        #region Get User By Email
         /// <summary>
         /// Get user by email id
         /// </summary>
@@ -40,5 +41,6 @@ namespace SkillRepositories.Repositories
                 return new User();
             }
         }
+        #endregion
     }
 }

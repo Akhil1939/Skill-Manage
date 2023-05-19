@@ -9,10 +9,14 @@ namespace Skill_Management.Controllers
     public class SkillController : Controller
     {
         private readonly ISkillService _skillService;
+        
         public SkillController(ISkillService skillService)
         {
             _skillService = skillService;
+            
         }
+
+        #region SkillListing and filter
 
         /// <summary>
         /// Skill Listing 
@@ -25,6 +29,10 @@ namespace Skill_Management.Controllers
         /// <returns>Skill List view with data</returns>
         public IActionResult Home(int PageNo = 1, int PageSize = 5, string Status = "All", string? Sort = "New_to_Old", string? Keyword = "")
         {
+            //var isLogin = HttpContext.Session.GetString("Login");
+            //if (string.IsNullOrEmpty(isLogin)) { 
+            //return RedirectToAction("Login", "Auth");
+            //}
             DataList<SkillListing> SkillList = _skillService.GetSkillList(PageNo, PageSize, Status, Sort, Keyword);
 
             return View(SkillList);
@@ -37,11 +45,14 @@ namespace Skill_Management.Controllers
         /// <param name="param"></param>
         /// <returns> skill listingpartial view with filtered skill</returns>
         [HttpPost]
-        public IActionResult SkillFilter([FromBody]SkillFilter param)
+        public IActionResult SkillFilter([FromBody] SkillFilter param)
         {
             DataList<SkillListing> SkillList = _skillService.GetSkillList(param.PageNo, param.PageSize, param.Status, param.Sort, param.Keyword);
             return PartialView("Skill/_SkillListing", SkillList);
         }
+        #endregion
+
+        #region Add Skill
 
         /// <summary>
         /// Add skill 
@@ -53,27 +64,25 @@ namespace Skill_Management.Controllers
         }
 
         /// <summary>
-        /// Add Skill
+        /// Add new skill
         /// </summary>
         /// <param name="newSkill"></param>
-        /// <returns> redirect to skill listing with response message</returns>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> AddSkill(AddSkill newSkill)
         {
             if (ModelState.IsValid)
             {
+                Skill skill = new Skill
+                {
+                    SkillName = newSkill.SkillName,
+                    Status = newSkill.Status,
+                    CreatedAt = DateTime.Now,
+                };
+                await _skillService.Add(skill);
 
-                bool IsSkillAdded = await _skillService.AddSkill(newSkill);
-                if (IsSkillAdded)
-                {
-                    TempData["SuccessMessage"] = "Skill Added Successfull";
-                    return  RedirectToAction("Home");
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Error in Adding Skill";
-                    return View(newSkill);
-                }
+                TempData["SuccessMessage"] = "Skill Added Successfull";
+                return RedirectToAction("Home");
             }
             else
             {
@@ -81,7 +90,9 @@ namespace Skill_Management.Controllers
                 return View(newSkill);
             }
         }
+        #endregion
 
+        #region Update Skill
         /// <summary>
         /// Update Skill
         /// </summary>
@@ -89,10 +100,17 @@ namespace Skill_Management.Controllers
         /// <returns> form filled with skill data</returns>
         public async Task<IActionResult> UpdateSkill(long id)
         {
-            SkillEntities.DTOs.Skill.Skill skill = await _skillService.GetSkillById(id);
-            if(skill!= null)
+            Skill skill = await _skillService.GetById(id);
+            if (skill != null)
             {
-                return View(skill);
+                SkillDTO skillModel = new SkillDTO()
+                {
+                    SkillId = skill.SkillId,
+                    SkillName = skill.SkillName,
+                    Status = skill.Status,
+
+                };
+                return View(skillModel);
             }
             return RedirectToAction("Home");
 
@@ -104,21 +122,21 @@ namespace Skill_Management.Controllers
         /// <param name="skill"></param>
         /// <returns> redirect to skill listing with message</returns>
         [HttpPost]
-        public async Task<IActionResult> UpdateSkill(SkillEntities.DTOs.Skill.Skill skill)
+        public async Task<IActionResult> UpdateSkill(SkillDTO skill)
         {
             if (ModelState.IsValid)
             {
-                bool IsSkillUpdated = await _skillService.UpdateSkill(skill);
-                if (IsSkillUpdated)
-                {
-                    TempData["SuccessMessage"] = "Skill Updated Successfull";
-                    return RedirectToAction("Home");
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Error in Updating Skill";
-                    return View(skill);
-                }
+                Skill oldSkill = await _skillService.GetById(skill.SkillId);
+
+                oldSkill.SkillName = skill.SkillName;
+                oldSkill.Status = skill.Status;
+                oldSkill.UpdatedAt = DateTime.Now;
+
+                await _skillService.Update(oldSkill);
+
+                TempData["SuccessMessage"] = "Skill Updated Successfull";
+                return RedirectToAction("Home");
+
             }
             else
             {
@@ -126,6 +144,9 @@ namespace Skill_Management.Controllers
                 return View(skill);
             }
         }
+        #endregion
+
+        #region Delete Skill
 
         /// <summary>
         /// Delete skill
@@ -134,16 +155,14 @@ namespace Skill_Management.Controllers
         /// <returns> redirect to skill listing with message</returns>
         public async Task<IActionResult> DeleteSkill(long id)
         {
-            bool isSkillDeleted = await _skillService.DeleteSkill(id);
-            if (isSkillDeleted)
+            Skill skill = await _skillService.GetById(id);
+            if(skill != null)
             {
-                TempData["SuccessMessage"] = "Skill Deleted Successfull";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Error in Deleting Skill";
+            await _skillService.Delete(skill);
+            TempData["SuccessMessage"] = "Skill Deleted Successfull";
             }
             return RedirectToAction("Home");
         }
+        #endregion
     }
 }

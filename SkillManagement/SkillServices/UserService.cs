@@ -23,6 +23,7 @@ namespace SkillServices
             _userRepo = userRepo;
         }
 
+        #region Get User By Id
         /// <summary>
         /// Get User By Id
         /// </summary>
@@ -32,7 +33,9 @@ namespace SkillServices
         {
             return await _userGenRepo.GetByIdAsync(id);
         }
+        #endregion
 
+        #region Get User By Email
         /// <summary>
         /// Get User By Email
         /// </summary>
@@ -48,6 +51,9 @@ namespace SkillServices
             return user;
 
         }
+        #endregion
+
+        #region Login
 
         /// <summary>
         /// User Login
@@ -71,9 +77,8 @@ namespace SkillServices
             {
                 return false;
             }
-
-
         }
+        #endregion
     }
 }
 

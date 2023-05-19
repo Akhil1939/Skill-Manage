@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace SkillRepositories.Interfaces
 {
-    public interface ISkillRepository
+    public interface ISkillRepository : IRepository<Skill>
     {
-        //Task<List<Skill>> GetSkillList(int PageNo, int PageSize, string Sort, string Keyword);
+        
     }
 }

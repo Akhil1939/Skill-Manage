@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SkillEntities.DTOs.Skill
 {
-    public class Skill
+    public class SkillDTO
     {
         /// <summary>
         /// Skill Id

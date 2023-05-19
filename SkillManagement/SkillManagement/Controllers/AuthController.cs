@@ -14,6 +14,8 @@ namespace Skill_Management.Controllers
             _userService = userService;
         }
 
+        #region Login
+
         /// <summary>
         /// Login
         /// </summary>
@@ -40,6 +42,7 @@ namespace Skill_Management.Controllers
                 if (isLoginSuccess)
                 {
                     TempData["SuccessMessage"] = "Login Successfull";
+                    //HttpContext.Session.SetString("Login", "true");
                     return RedirectToAction("Home", "Skill");
                 }
                 else
@@ -48,8 +51,9 @@ namespace Skill_Management.Controllers
                     return View(Creadentials);
                 }
             }
-            return View();
+            return View(Creadentials);
 
         }
+        #endregion
     }
 }

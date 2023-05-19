@@ -7,15 +7,19 @@ using SkillServices.IServices;
 
 namespace SkillServices
 {
-    public class SkillService : ISkillService
+    public class SkillService :Service<Skill>, ISkillService
     {
-        private readonly IRepository<SkillEntities.DataModels.Skill> _skillGenRepo;
+        
+        private readonly ISkillRepository _skillRepo;
 
-        public SkillService(IRepository<SkillEntities.DataModels.Skill> skillGenRepo)
+        public SkillService( ISkillRepository skillRepository):base(skillRepository)
         {
-            _skillGenRepo = skillGenRepo;
+           
+            _skillRepo = skillRepository;
+
         }
 
+        #region Get Skill List
         /// <summary>
         /// Get skill list
         /// </summary>
@@ -27,7 +31,7 @@ namespace SkillServices
         /// <returns>List of Skill filtered by given params</returns>
         public DataList<SkillListing> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword)
         {
-            IQueryable<SkillEntities.DataModels.Skill> SkillList = _skillGenRepo.GetAll();
+            IQueryable<Skill> SkillList = _skillRepo.GetAll();
 
             switch (Status)
             {
@@ -67,8 +71,8 @@ namespace SkillServices
 
             DataList<SkillListing> Result = new();
             Result.TotalRecords = SkillList.Count();
-            Result.Records = SkillList.Skip((PageNo - 1)* PageSize).Take(PageSize)
-                .Select(skill=> new SkillListing()
+            Result.Records = SkillList.Skip((PageNo - 1) * PageSize).Take(PageSize)
+                .Select(skill => new SkillListing()
                 {
                     SkillId = skill.SkillId,
                     SkillName = skill.SkillName,
@@ -79,94 +83,15 @@ namespace SkillServices
             return Result;
 
         }
+        #endregion
 
-        /// <summary>
-        /// Add skill
-        /// </summary>
-        /// <param name="newSkill"></param>
-        /// <returns>boolean response</returns>
-        public async Task<bool> AddSkill(AddSkill newSkill)
-        {
-            SkillEntities.DataModels.Skill skill = new SkillEntities.DataModels.Skill
-            {
-                SkillName = newSkill.SkillName,
-                Status = newSkill.Status,
-                CreatedAt = DateTime.Now,
-            };
+      
 
-            try
-            {
-                await _skillGenRepo.AddAsync(skill);
-                return true;
-            }catch (Exception ex)
-            {
-                Log.Error(ex, "An error occurred while adding a skill.");
-                return false;
-            }
+        
 
-            
-        }
+       
 
-        /// <summary>
-        /// Get skill by id
-        /// </summary>
-        /// <param name="skillId"></param>
-        /// <returns></returns>
-        public async Task<SkillEntities.DTOs.Skill.Skill> GetSkillById(long skillId)
-        {
-            SkillEntities.DataModels.Skill skill = await _skillGenRepo.GetByIdAsync(skillId);
-
-            if (skill != null)
-            {
-                return new SkillEntities.DTOs.Skill.Skill()
-                {
-                    SkillId = skill.SkillId,
-                    SkillName = skill.SkillName,
-                    Status = skill.Status
-                };
-            }
-            return new SkillEntities.DTOs.Skill.Skill();
-        }
-
-        public async Task<bool> UpdateSkill(SkillEntities.DTOs.Skill.Skill updateSkill)
-        {
-            SkillEntities.DataModels.Skill oldSkill = await _skillGenRepo.GetByIdAsync(updateSkill.SkillId);
-            oldSkill.SkillName = updateSkill.SkillName;
-            oldSkill.Status = updateSkill.Status;
-            oldSkill.UpdatedAt = DateTime.Now;
-
-            try
-            {
-                await _skillGenRepo.UpdateAsync(oldSkill);
-                return true;
-            }catch(Exception ex)
-            {
-                Log.Error(ex, "An error occurred while Updating a skill.");
-                return false;
-            }
-        }
-
-        public async Task<bool> DeleteSkill(long skillId)
-        {
-            try
-            {
-                SkillEntities.DataModels.Skill skill =  await _skillGenRepo.GetByIdAsync(skillId);
-                if(skill != null)
-                {
-                    await _skillGenRepo.DeleteAsync(skill);
-                    return true;
-                }
-                else
-                {
-                    throw new Exception("Skill not Found");
-                }
-            }catch(Exception ex)
-            {
-                Log.Error(ex, "An error occurred while Deleting a skill.");
-                return false;
-            }
-        }
-
+        
 
     }
 }

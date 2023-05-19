@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 
 namespace SkillRepositories.Repositories
 {
-    public class SkillRepository : ISkillRepository
+    public class SkillRepository : Repository<Skill>, ISkillRepository 
     {
-        //public Task<List<Skill>> GetSkillList(int PageNo, int PageSize, string Sort, string Keyword)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
+        private readonly ManagementContext _dbContext;
+        public SkillRepository(ManagementContext dbContext) : base(dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+
+        
     }
 }
