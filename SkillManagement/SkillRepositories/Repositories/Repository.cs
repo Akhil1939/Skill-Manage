@@ -8,10 +8,13 @@ namespace SkillRepositories.Repositories
     public class Repository<T> : IRepository<T> where T : class 
     {
         private readonly ManagementContext _dbContext;
+        private readonly DbSet<T> _dbSet;
+       
 
         public Repository(ManagementContext dbContext)
         {
             _dbContext = dbContext;
+            _dbSet = dbContext.Set<T>();   
         }
 
         #region Get By Id
@@ -23,7 +26,7 @@ namespace SkillRepositories.Repositories
         /// <returns>single entity of type T having given id</returns>
         public async Task<T> GetByIdAsync(long id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
         #endregion
 
@@ -34,7 +37,7 @@ namespace SkillRepositories.Repositories
         /// <returns>List of entity of type T</returns>
         public IQueryable<T> GetAll()
         {
-            return  _dbContext.Set<T>().AsQueryable();
+            return _dbSet.AsQueryable();
         }
         #endregion
 
@@ -46,7 +49,7 @@ namespace SkillRepositories.Repositories
         /// <returns> execption if any</returns>
         public async Task AddAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
+            await _dbSet.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
         }
         #endregion
@@ -72,7 +75,7 @@ namespace SkillRepositories.Repositories
         /// <returns>execption if any</returns>
         public async Task DeleteAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
+            _dbSet.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
         #endregion

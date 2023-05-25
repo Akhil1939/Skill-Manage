@@ -25,21 +25,9 @@ namespace SkillRepositories.Repositories
         /// <returns>User entity if found else null user</returns>
         public async Task<User> GetUserByEmail(string email)
         {
-            try
-            {
+
             User user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.DeletedAt == null && user.Status == true);
-                if(user == null)
-                {
-                    return new User();
-                }
-                else
-                {
-                    return user;
-                }
-            }catch(Exception ex)
-            {
-                return new User();
-            }
+            return user;
         }
         #endregion
     }

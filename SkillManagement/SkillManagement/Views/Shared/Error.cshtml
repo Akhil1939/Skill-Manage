@@ -3,6 +3,11 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@{
+    @if(@Model != null)
+    {
+        
 <div class="row">
     <div class="text-danger">
         <h3>Error: @Model.Error.Message</h3>
@@ -11,6 +16,10 @@
 <div class="row">
     <div class="col-12">
         <p>@Model.Error.StackTrace</p>
+        <hr />
         <p>@Model.Error.InnerException</p>
     </div>
 </div>
+    }
+
+}

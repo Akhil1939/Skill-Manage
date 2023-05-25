@@ -36,7 +36,8 @@ namespace SkillManagement.Controllers
                 string path = iExceptionHandlerFeature.Path;
                 Exception exception =
                 iExceptionHandlerFeature.Error;
-                //Write code here to log the exception details
+                // log the exception details
+                _logger.LogError(exception, path);
                 return View("Error",
                 iExceptionHandlerFeature);
             }
@@ -48,8 +49,9 @@ namespace SkillManagement.Controllers
             var iStatusCodeReExecuteFeature =
             HttpContext.Features.Get
             <IStatusCodeReExecuteFeature>();
+            _logger.LogError("NotFound");
             return View("NotFound",
-            iStatusCodeReExecuteFeature.OriginalPath);
+            iStatusCodeReExecuteFeature?.OriginalPath);
         }
     }
 }

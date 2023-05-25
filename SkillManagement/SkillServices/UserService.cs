@@ -64,19 +64,14 @@ namespace SkillServices
         {
             User user = await GetUserByEmail(credentials.UserName);
 
-            if (user == null)
+            if (user != null)
             {
+                if (Crypto.VerifyHashedPassword(user.Password, credentials.Password))
+                {
+                    return true;
+                }
+            }
                 return false;
-            }
-
-            if (Crypto.VerifyHashedPassword(user.Password, credentials.Password))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }
