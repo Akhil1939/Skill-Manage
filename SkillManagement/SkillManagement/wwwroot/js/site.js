@@ -4,7 +4,7 @@
 // Write your JavaScript code.
 
 function HideMessage() {
-    debugger
+   
     if ($(".alert").length > 0) {
         $(".alert").remove();
     }

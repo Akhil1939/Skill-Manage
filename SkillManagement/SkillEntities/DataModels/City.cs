@@ -8,7 +8,6 @@ namespace SkillEntities.DataModels
         public City()
         {
             Missions = new HashSet<Mission>();
-            Users = new HashSet<User>();
         }
 
         public long CityId { get; set; }
@@ -20,6 +19,5 @@ namespace SkillEntities.DataModels
 
         public virtual Country? Country { get; set; }
         public virtual ICollection<Mission> Missions { get; set; }
-        public virtual ICollection<User> Users { get; set; }
     }
 }

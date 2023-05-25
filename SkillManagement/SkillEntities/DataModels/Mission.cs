@@ -7,17 +7,10 @@ namespace SkillEntities.DataModels
     {
         public Mission()
         {
-            Comments = new HashSet<Comment>();
-            FavouriteMissions = new HashSet<FavouriteMission>();
             GoalMissions = new HashSet<GoalMission>();
-            MissionApplications = new HashSet<MissionApplication>();
-            MissionDocuments = new HashSet<MissionDocument>();
-            MissionInvites = new HashSet<MissionInvite>();
             MissionMedia = new HashSet<MissionMedium>();
-            MissionRatings = new HashSet<MissionRating>();
             MissionSkills = new HashSet<MissionSkill>();
             Stories = new HashSet<Story>();
-            Timesheets = new HashSet<Timesheet>();
         }
 
         public long MissionId { get; set; }
@@ -46,16 +39,9 @@ namespace SkillEntities.DataModels
         public virtual City City { get; set; } = null!;
         public virtual Country Country { get; set; } = null!;
         public virtual MissionTheme MissionTheme { get; set; } = null!;
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<FavouriteMission> FavouriteMissions { get; set; }
         public virtual ICollection<GoalMission> GoalMissions { get; set; }
-        public virtual ICollection<MissionApplication> MissionApplications { get; set; }
-        public virtual ICollection<MissionDocument> MissionDocuments { get; set; }
-        public virtual ICollection<MissionInvite> MissionInvites { get; set; }
         public virtual ICollection<MissionMedium> MissionMedia { get; set; }
-        public virtual ICollection<MissionRating> MissionRatings { get; set; }
         public virtual ICollection<MissionSkill> MissionSkills { get; set; }
         public virtual ICollection<Story> Stories { get; set; }
-        public virtual ICollection<Timesheet> Timesheets { get; set; }
     }
 }

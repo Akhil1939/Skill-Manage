@@ -8,7 +8,6 @@ namespace SkillEntities.DataModels
         public Availability()
         {
             Missions = new HashSet<Mission>();
-            Users = new HashSet<User>();
         }
 
         public int AvailabilityId { get; set; }
@@ -18,6 +17,5 @@ namespace SkillEntities.DataModels
         public DateTime? DeletedAt { get; set; }
 
         public virtual ICollection<Mission> Missions { get; set; }
-        public virtual ICollection<User> Users { get; set; }
     }
 }

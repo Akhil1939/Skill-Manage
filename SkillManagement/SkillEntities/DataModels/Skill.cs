@@ -8,7 +8,6 @@ namespace SkillEntities.DataModels
         public Skill()
         {
             MissionSkills = new HashSet<MissionSkill>();
-            UserSkills = new HashSet<UserSkill>();
         }
 
         public long SkillId { get; set; }
@@ -19,6 +18,5 @@ namespace SkillEntities.DataModels
         public DateTime? DeletedAt { get; set; }
 
         public virtual ICollection<MissionSkill> MissionSkills { get; set; }
-        public virtual ICollection<UserSkill> UserSkills { get; set; }
     }
 }

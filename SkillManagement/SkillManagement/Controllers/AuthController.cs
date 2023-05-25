@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoMvcCore.Auth;
+using DemoMvcCore.Entities.Auth;
+using Microsoft.AspNetCore.Mvc;
 using SkillEntities.DataModels;
 using SkillEntities.DTOs;
 using SkillServices;
 using SkillServices.IServices;
+
 
 namespace Skill_Management.Controllers
 {
     public class AuthController : Controller
     {
         private readonly IUserService _userService;
-        public AuthController(IUserService userService)
+        private readonly IConfiguration _configuration;
+        public AuthController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
+            _configuration = configuration;
         }
 
         #region Login
@@ -38,11 +43,23 @@ namespace Skill_Management.Controllers
             if (ModelState.IsValid)
             {
                 
-                bool isLoginSuccess = await _userService.UserLogin(Creadentials);
-                if (isLoginSuccess)
+                User user = await _userService.UserLogin(Creadentials);
+                if (user != null)
                 {
                     TempData["SuccessMessage"] = "Login Successfull";
                     //HttpContext.Session.SetString("Login", "true");
+                    var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
+
+                    var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
+                    var cookieOptions = new CookieOptions
+                    {
+                        Expires = DateTime.Now.AddDays(1), // Set the expiration date/time for the cookie
+                        HttpOnly = true, // Ensure the cookie is accessible only through HTTP (not JavaScript)
+                        Secure = true, // Require HTTPS to send the cookie
+                        SameSite = SameSiteMode.Strict // Enforce strict same-site policy for the cookie
+                    };
+                    //HttpContext.Session.SetString("Token", token);
+                    Response.Cookies.Append("token", token, cookieOptions);
                     return RedirectToAction("Home", "Skill");
                 }
                 else
@@ -53,6 +70,13 @@ namespace Skill_Management.Controllers
             }
             return View(Creadentials);
 
+        }
+        #endregion
+
+        #region Register
+        public async Task<IActionResult> Register()
+        {
+            return View();
         }
         #endregion
     }

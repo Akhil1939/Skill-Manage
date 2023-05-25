@@ -23,7 +23,7 @@ namespace SkillServices.IServices
         /// </summary>
         /// <param name="credentials"></param>
         /// <returns></returns>
-        Task<bool> UserLogin(UserLogin credentials);
+        Task<User> UserLogin(UserLogin credentials);
 
     }
 }

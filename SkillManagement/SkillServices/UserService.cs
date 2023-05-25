@@ -43,12 +43,7 @@ namespace SkillServices
         /// <returns>User Entity having given Email</returns>
         public async Task<User> GetUserByEmail(string email)
         {
-            User user = await _userRepo.GetUserByEmail(email);
-            if (user == null)
-            {   
-                return new User();
-            }
-            return user;
+            return await _userRepo.GetUserByEmail(email);
 
         }
         #endregion
@@ -60,18 +55,22 @@ namespace SkillServices
         /// </summary>
         /// <param name="credentials"></param>
         /// <returns>Boolean response</returns>
-        public async Task<bool> UserLogin(UserLogin credentials)
+        public async Task<User> UserLogin(UserLogin credentials)
         {
             User user = await GetUserByEmail(credentials.UserName);
 
             if (user != null)
             {
-                if (Crypto.VerifyHashedPassword(user.Password, credentials.Password))
+                //if (Crypto.VerifyHashedPassword(user.Password, credentials.Password))
+                //{
+                //    return true;
+                //}
+                if(user.Password == credentials.Password)
                 {
-                    return true;
+                    return user;
                 }
             }
-                return false;
+                return null;
         }
         #endregion
     }

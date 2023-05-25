@@ -11,6 +11,7 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using SkillEntities.DTOs;
 using Newtonsoft.Json;
+using DemoMvcCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<ManagementContext>(options =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
@@ -43,7 +45,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseStatusCodePagesWithReExecute("/Error/NotFound/{0}");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    
     app.UseHsts();
 }
 //app.UseExceptionHandler(
@@ -79,8 +81,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<AuthorizationMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

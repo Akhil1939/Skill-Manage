@@ -29,10 +29,7 @@ namespace Skill_Management.Controllers
         /// <returns>Skill List view with data</returns>
         public IActionResult Home(int PageNo = 1, int PageSize = 5, string Status = "All", string? Sort = "New_to_Old", string? Keyword = "")
         {
-            //var isLogin = HttpContext.Session.GetString("Login");
-            //if (string.IsNullOrEmpty(isLogin)) { 
-            //return RedirectToAction("Login", "Auth");
-            //}
+           
             DataList<SkillListing> SkillList = _skillService.GetSkillList(PageNo, PageSize, Status, Sort, Keyword);
 
             return View(SkillList);
