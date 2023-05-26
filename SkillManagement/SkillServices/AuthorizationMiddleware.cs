@@ -1,4 +1,5 @@
-﻿using DemoMvcCore.Auth;
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -23,7 +24,11 @@ namespace DemoMvcCore
                 return;
             }
 
-
+            if (IsErrorPages(context))
+            {
+                await _next(context);
+                return ;
+            }
 
             // Check if the user is authenticated
             if (!IsAuthenticated(context))
@@ -34,11 +39,12 @@ namespace DemoMvcCore
             }
 
             // Check if the user is authorized to access the requested resource
-            // You can implement your own authorization logic here
             if (!IsAuthorized(context))
             {
-                // Redirect the user to the login page with a temporary message
-                context.Response.Redirect("/");
+                // Redirect the user to the previous page with a temporary message
+
+                context.Response.Redirect(context.Request.Headers.FirstOrDefault(key=>key.Key == "Referer").Value.ToString().Split('?')[0] + "?authorize=false");
+                 
                 return;
             }
 
@@ -53,9 +59,9 @@ namespace DemoMvcCore
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThisismySecretKeyWhichCanBeAnything")),
-                ValidateIssuer = false, 
+                ValidateIssuer = false,
                 ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero 
+                ClockSkew = TimeSpan.Zero
             };
 
             try
@@ -89,36 +95,36 @@ namespace DemoMvcCore
                 ValidateAudience = false,
                 ClockSkew = TimeSpan.Zero
             };
-            
+
 
 
             var claims = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
             if (claims != null)
             {
-               var claim = claims.Claims.ToArray();
+                var claim = claims.Claims.ToArray();
                 if (context.Request.Path.Equals("/Skill/Home", StringComparison.OrdinalIgnoreCase) || context.Request.Path.StartsWithSegments("/Skill/SkillFilter", StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
-                else if (context.Request.Path.Equals("/Skill/AddSkill", StringComparison.OrdinalIgnoreCase))
+                else if (context.Request.Path.StartsWithSegments("/Skill/AddSkill", StringComparison.OrdinalIgnoreCase))
                 {
                     if (claim[4].Value == "6")
                     {
                         return true;
                     }
                 }
-                else if (context.Request.Path.Equals("/Skill/UpdateSkill", StringComparison.OrdinalIgnoreCase))
+                else if (context.Request.Path.StartsWithSegments("/Skill/UpdateSkill", StringComparison.OrdinalIgnoreCase))
                 {
                     if (claim[4].Value == "6" || claim[4].Value == "2" || claim[4].Value == "3") { return true; }
                 }
-                else if(context.Request.Path.Equals("/Skill/DeleteSkill", StringComparison.OrdinalIgnoreCase))
+                else if (context.Request.Path.StartsWithSegments("/Skill/DeleteSkill", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (claim[4].Value == "6" || claim[4].Value == "2" ) { return true; }
+                    if (claim[4].Value == "6" || claim[4].Value == "2") { return true; }
                 }
                 else { return false; }
 
             }
-          return false; 
+            return false;
 
             // Implement your authorization logic here
         }
@@ -127,6 +133,10 @@ namespace DemoMvcCore
         {
             // Check if the requested path corresponds to the login page
             return context.Request.Path.Equals("/", StringComparison.OrdinalIgnoreCase);
+        }
+        private bool IsErrorPages(HttpContext context)
+        {
+            return context.Request.Path.StartsWithSegments("/Home/Error", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SkillEntities.DTOs.Skill
         /// <summary>
         /// Page Size
         /// </summary>
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 6;
 
         /// <summary>
         /// Status

@@ -27,10 +27,12 @@ namespace Skill_Management.Controllers
         /// <param name="Sort"></param>
         /// <param name="Keyword"></param>
         /// <returns>Skill List view with data</returns>
-        public IActionResult Home(int PageNo = 1, int PageSize = 5, string Status = "All", string? Sort = "New_to_Old", string? Keyword = "")
+        public IActionResult Home(SkillFilter param , string? authorize)
         {
-           
-            DataList<SkillListing> SkillList = _skillService.GetSkillList(PageNo, PageSize, Status, Sort, Keyword);
+            AuthenticationMessage(authorize);
+
+
+            DataList<SkillListing> SkillList = _skillService.GetSkillList(param.PageNo, param.PageSize, param.Status, param.Sort, param.Keyword);
 
             return View(SkillList);
         }
@@ -161,5 +163,13 @@ namespace Skill_Management.Controllers
             return RedirectToAction("Home");
         }
         #endregion
-    }
+
+        public void AuthenticationMessage(string? authorize)
+        {
+            if (authorize != null && authorize == "false")
+            {
+                TempData["ErrorMessage"] = "You are not authorize to this action";
+            }
+        }
+}
 }

@@ -71,6 +71,7 @@ namespace SkillServices
 
             DataList<SkillListing> Result = new();
             Result.TotalRecords = SkillList.Count();
+            Result.TotalPages = Math.Ceiling((decimal)SkillList.Count() / PageSize);
             Result.Records = SkillList.Skip((PageNo - 1) * PageSize).Take(PageSize)
                 .Select(skill => new SkillListing()
                 {

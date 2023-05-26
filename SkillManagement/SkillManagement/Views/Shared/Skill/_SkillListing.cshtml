@@ -71,7 +71,7 @@
                 <li class="" id="previous">
                     <button class="btn btn-secondary previous-btn" onclick="previousPage()">Previous</button>
                 </li>
-                @for (var i = 1; i <= Math.Ceiling((decimal)@Model.TotalRecords / 5); i++)
+                @for (var i = 1; i <= @Model.TotalPages; i++)
                 {
 
                     <li class="page-item"><button class="page-link page-indexes" id="page-@i" onclick="ChangePage(this)">@i</button></li>

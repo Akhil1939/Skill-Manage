@@ -32,6 +32,16 @@
                 </select>
             </div>
             <div class="mx-2">
+                <select class="form-select" aria-label="Default select example" onchange="ApplyPageSize(this)">
+                    <option selected value="6">PageSize</option>
+                    <option value=2 >2</option>
+                    <option value=4 >4</option>
+                    <option value=6 >6</option>
+                    <option value=8 >8</option>
+                    <option value=10 >10</option>
+                </select>
+            </div>
+            <div class="mx-2">
                 <input type="text" id="Search_Field" class="form-control" placeholder="Search Skill" onkeydown="SearchSkill(this)">
             </div>
             <button class="btn btn-success mx-2" onclick="location.href='@Url.Action("AddSkill", "Skill")'">
@@ -46,22 +56,7 @@
         <div id="Skill_List">
             <Partial name="Skill/_SkillListing" model=@Model />
         </div>
-        //<nav aria-label="Page navigation example">
-        //    <ul class="pagination justify-content-end align-items-center">
-        //        <li class="" id="previous">
-        //            <button class="btn btn-secondary previous-btn" onclick="previousPage()">Previous</button>
-        //        </li>
-        //        @for (var i = 1; i <= Math.Ceiling((decimal)@Model.TotalRecords / 5); i++)
-        //        {
-
-        //            <li class="page-item"><button class="page-link page-indexes" id="page-@i" onclick="ChangePage(this)">@i</button></li>
-        //        }
-
-        //        <li class="" id="next">
-        //            <button class="btn btn-secondary next-btn" onclick="nextPage()">Next</button>
-        //        </li>
-        //    </ul>
-        //</nav>
+        
     }
     else
     {

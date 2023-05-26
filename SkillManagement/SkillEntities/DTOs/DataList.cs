@@ -12,6 +12,7 @@ namespace SkillEntities.DTOs
         /// Store the total no of records in db
         /// </summary>
        public int TotalRecords { get; set; }
+        public decimal TotalPages { get; set; }
 
         /// <summary>
         /// List of the recordes after filters

@@ -65,6 +65,12 @@ async function ApplyStatus(e) {
     await FilterSkill();
     SetPagination();
 }
+async function ApplyPageSize(e) {
+    PageSize = e.value;
+    PageNo = 1;
+    await FilterSkill();
+    SetPagination();
+}
 
 function SetPagination() {
     document.getElementById(`page-${PageNo}`).parentElement.classList.add('active')
