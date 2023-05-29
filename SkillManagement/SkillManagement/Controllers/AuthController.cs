@@ -25,6 +25,7 @@ namespace Skill_Management.Controllers
         /// Login
         /// </summary>
         /// <returns>Login form page</returns>
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -78,6 +79,21 @@ namespace Skill_Management.Controllers
         public async Task<IActionResult> Register()
         {
             return View();
+        }
+        #endregion
+
+        #region Logout
+        [HttpPost]
+        public   IActionResult Logout()
+        {
+            if(Request.Cookies["token"] != null)
+            {
+
+            Response.Cookies.Delete("token");
+            }
+           
+            TempData["SuccessMessage"] = "Logout Successfull";
+            return RedirectToAction("Login");
         }
         #endregion
     }

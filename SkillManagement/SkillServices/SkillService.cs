@@ -29,11 +29,11 @@ namespace SkillServices
         /// <param name="Sort"></param>
         /// <param name="Keyword"></param>
         /// <returns>List of Skill filtered by given params</returns>
-        public DataList<SkillListing> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword)
+        public DataList<SkillListing> GetSkillList(SkillFilter param)
         {
             IQueryable<Skill> SkillList = _skillRepo.GetAll();
 
-            switch (Status)
+            switch (param.Status)
             {
                 case "All":
                     break;
@@ -46,12 +46,12 @@ namespace SkillServices
             }
 
 
-            if (!string.IsNullOrEmpty(Keyword))
+            if (!string.IsNullOrEmpty(param.Keyword))
             {
-                SkillList = SkillList.Where(skill => skill.SkillName!.ToLower().Contains(Keyword.ToLower()));
+                SkillList = SkillList.Where(skill => skill.SkillName!.ToLower().Contains(param.Keyword.ToLower()));
             }
 
-            switch (Sort)
+            switch (param.Sort)
             {
                 case "A_to_Z":
                     SkillList = SkillList.OrderBy(skill => skill.SkillName);
@@ -71,8 +71,8 @@ namespace SkillServices
 
             DataList<SkillListing> Result = new();
             Result.TotalRecords = SkillList.Count();
-            Result.TotalPages = Math.Ceiling((decimal)SkillList.Count() / PageSize);
-            Result.Records = SkillList.Skip((PageNo - 1) * PageSize).Take(PageSize)
+            Result.TotalPages = Math.Ceiling((decimal)SkillList.Count() / param.PageSize);
+            Result.Records = SkillList.Skip((param.PageNo - 1) * param.PageSize).Take(param.PageSize)
                 .Select(skill => new SkillListing()
                 {
                     SkillId = skill.SkillId,

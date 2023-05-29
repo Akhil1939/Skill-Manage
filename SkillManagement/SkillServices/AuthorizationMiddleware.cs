@@ -18,16 +18,10 @@ namespace DemoMvcCore
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (IsLoginPage(context))
+            if (ShouldBypassAuthorization(context))
             {
                 await _next(context);
                 return;
-            }
-
-            if (IsErrorPages(context))
-            {
-                await _next(context);
-                return ;
             }
 
             // Check if the user is authenticated
@@ -43,7 +37,7 @@ namespace DemoMvcCore
             {
                 // Redirect the user to the previous page with a temporary message
 
-                context.Response.Redirect(context.Request.Headers.FirstOrDefault(key=>key.Key == "Referer").Value.ToString().Split('?')[0] + "?authorize=false");
+                context.Response.Redirect(GetPreviousPageUrl(context).Split('?')[0] + "?authorize=false");
                  
                 return;
             }
@@ -84,7 +78,7 @@ namespace DemoMvcCore
             // Check if the user is authorized based on their roles or claims
             // You can use context.User.HasClaim or any authorization mechanism
             // Return true if authorized, false otherwise
-            var user = context.User.Claims;
+            //var user = context.User.Claims;
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = context.Request.Cookies["token"];
             var tokenValidationParameters = new TokenValidationParameters
@@ -128,7 +122,10 @@ namespace DemoMvcCore
 
             // Implement your authorization logic here
         }
-
+        private bool ShouldBypassAuthorization(HttpContext context)
+        {
+            return IsLoginPage(context) || IsErrorPages(context) || IsLogoutPage(context);
+        }
         private bool IsLoginPage(HttpContext context)
         {
             // Check if the requested path corresponds to the login page
@@ -137,6 +134,15 @@ namespace DemoMvcCore
         private bool IsErrorPages(HttpContext context)
         {
             return context.Request.Path.StartsWithSegments("/Home/Error", StringComparison.OrdinalIgnoreCase);
+        } 
+        private bool IsLogoutPage(HttpContext context)
+        {
+            return context.Request.Path.StartsWithSegments("/Auth/Logout", StringComparison.OrdinalIgnoreCase);
+        }
+        private string GetPreviousPageUrl(HttpContext context)
+        {
+            var referer = context.Request.Headers["Referer"].FirstOrDefault();
+            return string.IsNullOrEmpty(referer) ? "/" : referer;
         }
     }
 }

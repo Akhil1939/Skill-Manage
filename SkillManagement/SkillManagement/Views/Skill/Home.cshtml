@@ -15,7 +15,7 @@
     {
         <div class="d-flex justify-content-center align-items-center">
             <div class="mx-2">
-                <select class="form-select" aria-label="Default select example" onchange="ApplySorting(this)">
+                <select class="form-select" aria-label="Default select example" id="FilterSort" onchange="ApplySorting(this)">
                     <option selected value="New">Sort</option>
                     <option value="A_to_Z">A to Z</option>
                     <option value="Z_to_A">Z to A</option>
@@ -24,7 +24,7 @@
                 </select>
             </div>
             <div class="mx-2">
-                <select class="form-select" aria-label="Default select example" onchange="ApplyStatus(this)">
+                <select class="form-select" aria-label="Default select example" id="FilterPageStatus" onchange="ApplyStatus(this)">
                     <option selected value="All">Status</option>
                     <option value="All">All</option>
                     <option value="Active">Active</option>
@@ -32,7 +32,7 @@
                 </select>
             </div>
             <div class="mx-2">
-                <select class="form-select" aria-label="Default select example" onchange="ApplyPageSize(this)">
+                <select class="form-select" aria-label="Default select example" id="FilterPageSize" onchange="ApplyPageSize(this)">
                     <option selected value="6">PageSize</option>
                     <option value=2 >2</option>
                     <option value=4 >4</option>
@@ -42,8 +42,13 @@
                 </select>
             </div>
             <div class="mx-2">
-                <input type="text" id="Search_Field" class="form-control" placeholder="Search Skill" onkeydown="SearchSkill(this)">
+                <input type="text"  class="form-control" placeholder="Search Skill" id="FilterKeyword" onkeydown="SearchSkill(this)">
             </div>
+             <button class="btn btn-danger mx-2" onclick="ClearFilter()">
+
+               
+                <span>Clear Filter</span>
+            </button>
             <button class="btn btn-success mx-2" onclick="location.href='@Url.Action("AddSkill", "Skill")'">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">

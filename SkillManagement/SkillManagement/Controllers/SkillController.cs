@@ -32,7 +32,7 @@ namespace Skill_Management.Controllers
             AuthenticationMessage(authorize);
 
 
-            DataList<SkillListing> SkillList = _skillService.GetSkillList(param.PageNo, param.PageSize, param.Status, param.Sort, param.Keyword);
+            DataList<SkillListing> SkillList = _skillService.GetSkillList(param);
 
             return View(SkillList);
         }
@@ -46,7 +46,7 @@ namespace Skill_Management.Controllers
         [HttpPost]
         public IActionResult SkillFilter([FromBody] SkillFilter param)
         {
-            DataList<SkillListing> SkillList = _skillService.GetSkillList(param.PageNo, param.PageSize, param.Status, param.Sort, param.Keyword);
+            DataList<SkillListing> SkillList = _skillService.GetSkillList(param);
             return PartialView("Skill/_SkillListing", SkillList);
         }
         #endregion

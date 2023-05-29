@@ -13,3 +13,18 @@ function HideMessage() {
 (() => {
     setInterval("HideMessage()", 3000)
 })()
+
+function Logout() {
+    debugger
+    localStorage.clear();
+    $.ajax({
+        url: '/Auth/Logout',
+        type: 'post',
+        success: function (data) {
+            window.location.href = "/";
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}

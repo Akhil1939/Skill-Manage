@@ -15,7 +15,7 @@ namespace SkillServices.IServices
         /// <param name="Sort"></param>
         /// <param name="Keyword"></param>
         /// <returns> list of skill</returns>
-        DataList<SkillListing> GetSkillList(int PageNo, int PageSize, string Status, string Sort, string Keyword);
+        DataList<SkillListing> GetSkillList(SkillFilter param);
 
 
     }
