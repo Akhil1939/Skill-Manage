@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace DemoMvcCore.Auth
 {
-    public static class JwtTokenHelper
+    public class JwtTokenHelper
     {
         public static string GenerateToken(JwtSetting jwtSetting, User user)
         {
@@ -19,17 +19,17 @@ namespace DemoMvcCore.Auth
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.FirstName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
-               
+
                 new Claim("CustomClaimForUser", JsonSerializer.Serialize(user)),
                 new Claim("position", user.Position.ToString())
-        };
-           
+                };
+
 
             var token = new JwtSecurityToken(
                 jwtSetting.Issuer,
@@ -40,5 +40,31 @@ namespace DemoMvcCore.Auth
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+//        public ClaimsPrincipal? ValidateJwtToken(string token)
+//        {
+//            var tokenHandler = new JwtSecurityTokenHandler();
+
+//            //var key = Encoding.ASCII.GetBytes(_configuration.GetSection("JwtSetting")["SecretKey"]);
+//            var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
+//            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key));
+
+//            var validationParameters = new TokenValidationParameters
+//            {
+//                ValidateIssuerSigningKey = true,
+//                IssuerSigningKey = new SymmetricSecurityKey(key)
+//,
+//                ValidateIssuer = false,
+//                ValidateAudience = false,
+//                ClockSkew = TimeSpan.Zero
+//            };
+
+//            //var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+//            //return claimsPrincipal;
+
+//            var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+
+//            return principal;
+//        }
     }
 }

@@ -26,8 +26,14 @@ namespace Skill_Management.Controllers
         /// </summary>
         /// <returns>Login form page</returns>
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = "")
         {
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+           TempData["returnUrl"] = returnUrl;
+                return RedirectToAction("Login", "Auth");
+
+            }
             return View();
         }
 
@@ -38,9 +44,14 @@ namespace Skill_Management.Controllers
         /// <returns> Home Page</returns>
         
         [HttpPost]
-        public async Task<IActionResult> Login(UserLogin Creadentials)
+        public async Task<IActionResult> Login(UserLogin Creadentials )
         {
+            if (TempData.ContainsKey("returnUrl"))
+            {
 
+                string returnUrl = TempData["returnUrl"].ToString() ?? string.Empty;
+            }
+            
             if (ModelState.IsValid)
             {
                

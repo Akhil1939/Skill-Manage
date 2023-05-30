@@ -42,9 +42,12 @@ async function FilterSkill() {
         }),
         success: function (data) {
             document.getElementById("Skill_List").innerHTML = data
+            
         },
-        error: function (err) {
-            console.log(err)
+        error: function (xhr, status, error) {
+            if (xhr.status == 403) {
+                location.reload();
+            }
         }
     })
 }

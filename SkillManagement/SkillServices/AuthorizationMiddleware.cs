@@ -27,7 +27,18 @@ namespace DemoMvcCore
             // Check if the user is authenticated
             if (!IsAuthenticated(context))
             {
+                bool isAjaxRequest = context.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+                if (isAjaxRequest)
+                {
+                    context.Response.StatusCode = 403;
+                    context.Response.Headers.Add("Unauthorized", "true");
+                    await context.Response.WriteAsync("Unauthorized AJAX request");
+                    return;
+                }
                 // Redirect the user to the login page with a temporary message
+                string PreviousUrl = GetPreviousPageUrl(context);
+                context.Response.StatusCode = 403;  
+                
                 context.Response.Redirect("/");
                 return;
             }
@@ -78,7 +89,7 @@ namespace DemoMvcCore
             // Check if the user is authorized based on their roles or claims
             // You can use context.User.HasClaim or any authorization mechanism
             // Return true if authorized, false otherwise
-            //var user = context.User.Claims;
+            
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = context.Request.Cookies["token"];
             var tokenValidationParameters = new TokenValidationParameters
@@ -96,6 +107,8 @@ namespace DemoMvcCore
             if (claims != null)
             {
                 var claim = claims.Claims.ToArray();
+                //2 for role
+                //4 for position
                 if (context.Request.Path.Equals("/Skill/Home", StringComparison.OrdinalIgnoreCase) || context.Request.Path.StartsWithSegments("/Skill/SkillFilter", StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
@@ -129,7 +142,7 @@ namespace DemoMvcCore
         private bool IsLoginPage(HttpContext context)
         {
             // Check if the requested path corresponds to the login page
-            return context.Request.Path.Equals("/", StringComparison.OrdinalIgnoreCase);
+            return context.Request.Path.StartsWithSegments("/", StringComparison.OrdinalIgnoreCase);
         }
         private bool IsErrorPages(HttpContext context)
         {

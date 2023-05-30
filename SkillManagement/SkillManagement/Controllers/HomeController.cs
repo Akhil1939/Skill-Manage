@@ -17,8 +17,12 @@ namespace SkillManagement.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult Index(string?returnUrl="")
         {
+            if(returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
             return View();
         }
 
